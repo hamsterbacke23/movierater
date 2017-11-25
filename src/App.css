@@ -8,6 +8,10 @@
   color: white;
 }
 
+.App-input {
+  margin-bottom: 60px;
+}
+
 textarea {
   background-color: #233237;
   color: #fff;

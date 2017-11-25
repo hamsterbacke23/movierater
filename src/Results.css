@@ -6,6 +6,7 @@
 
 .results > li {
     display: flex;
+    justify-content: center;
     margin: 10px 0;
 }
 

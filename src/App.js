@@ -66,8 +66,10 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Movierater</h1>
         </header>
-        <textarea onChange={this.handleChange} value={this.state.content}></textarea>
-        <Button handleSubmit={this.handleSubmit}>Submit</Button>
+        <div className="App-input">
+          <textarea onChange={this.handleChange} value={this.state.content}></textarea>
+          <Button handleSubmit={this.handleSubmit}>Submit</Button>
+        </div>
         <Results results={this.state.infos}/>
       </div>
     );
