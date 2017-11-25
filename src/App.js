@@ -42,7 +42,7 @@ class App extends Component {
   }
 
   searchInfos(){
-    this.state.lines.map((line) => fetch(`http://www.omdbapi.com/?t=${line}&apikey=${this.apiKey}`)
+    this.state.lines.map((line) => fetch(`https://www.omdbapi.com/?t=${line}&apikey=${this.apiKey}`)
       .then(response => {
         if(!response.ok) {
           const e = new Error('Something went wrong');
