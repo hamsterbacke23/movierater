@@ -3,7 +3,7 @@ import './App.css';
 import Button from './Button.js';
 import Results from './Results.js';
 import CopyToClipboard from './CopyToClipboard.js';
-
+import octocat from './svg/octocat.svg';
 
 class App extends Component {
 
@@ -105,6 +105,11 @@ class App extends Component {
             string={this.state.href}
           />
         }
+
+        <a className="view-on-github" href="https://github.com/hamsterbacke23/movierater">
+          <span> View on GitHub </span>
+          <img src={octocat} alt="octocat"/>
+        </a>
       </div>
     );
   }

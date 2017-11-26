@@ -18,6 +18,24 @@ a {
   color: #fff;
 }
 
+.view-on-github {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  opacity: 0.3;
+  display: flex;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.view-on-github > * {
+  align-self: center;
+}
+
+.view-on-github img {
+  margin-left: 10px;
+}
+
 textarea {
   background-color: #233237;
   padding: 10px;
