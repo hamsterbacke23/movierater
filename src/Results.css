@@ -27,19 +27,12 @@
     height: 75px;
 }
 
-.results .tobirating {
+.results .customRating {
     transform-origin: 50% 50%;
     transform: rotate(180deg);
     width: 5vw;
     margin: 0 15px;
-}
-
-.results .tobirating-1 {transform: rotate(90deg)}    
-.results .tobirating-2 {transform: rotate(60deg)}    
-.results .tobirating-3 {transform: rotate(30deg)}    
-.results .tobirating-4 {transform: rotate(15deg)}    
-.results .tobirating-5 {transform: rotate(5deg)}    
-.results .tobirating-6 {transform: rotate(0)}    
+} 
 
 .ratings {
     text-align: left;

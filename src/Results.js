@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Results.css';
-import thumbs_up from './svg/thumbs_up.svg';
-import tobiRating from './tobiRating.js'
+import thumbsUp from './svg/thumbsUp.svg';
+import customRating from './customRating.js'
 
 
 const imdbUri = 'https://www.imdb.com/title/';
+const thumbsUpSteps = 18;
+const thumbsUpStart = 90;
 
 const row = (result, index) =>
     <li key={`row_${index ? index : Math.random(1, 100000)}`}>
@@ -17,7 +19,14 @@ const row = (result, index) =>
                 <li key={`ratings_${j}_${index}`}>{rating.Source}: {rating.Value}</li>
             )}
         </ul>
-        <img src={thumbs_up} className={`tobirating tobirating-${result.tobiRating}`} alt={`tobi rating: ${result.tobiRating}`}/>
+        <img
+            src={thumbsUp} 
+            className={`customRating customRating-${result.customRating}`} 
+            alt={`tobi rating: ${result.customRating}`}
+            style={{
+                'transform': `rotate(${thumbsUpStart - thumbsUpSteps * result.customRating}deg)`
+            }}
+            />
         
     </li>
 
@@ -33,7 +42,7 @@ const formatTitle = (results) => results.map((res) => {
 
 
 function Results(props) {
-    const customratedResults = tobiRating(props.results);
+    const customratedResults = customRating(props.results);
     const formattedResults = formatTitle(customratedResults);
     return (
         <ul className="results">
