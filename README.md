@@ -8,6 +8,13 @@ To adjust the custom rating ("thumbs up"), have a look [here](src/customRating.j
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
+### Getting Started
+After cloning, run
+```yarn start``` or ```npm start```
+
+See https://github.com/facebookincubator/create-react-app#npm-start-or-yarn-start
+
+
 ### Open Movie Database API
 Please consider donating to http://www.omdbapi.com/ for making these kind of apps possible.
 
