@@ -10,3 +10,24 @@
     word-wrap:break-word;
     max-width: 40%;
 }
+
+.flex {
+    display: flex;
+}
+
+/* Animation */
+@keyframes fadeInOut {
+    0% {opacity: 0}
+    25% {opacity: 1}
+    75% {opacity: 1}
+    100% {opacity: 0}
+}
+
+.buttonTitle.result {
+    opacity: 0;
+    display: block;
+    color: #fff;
+    font-size: 14px;
+    animation-name: fadeInOut;
+    animation-duration: 3s;
+}

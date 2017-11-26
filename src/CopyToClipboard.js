@@ -7,8 +7,16 @@ import Button from './Button.js';
 import chain from './svg/chain.svg';
 
 
-
 class CopyToClipboard extends Component {
+
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      resultMsg: '',
+      showResultMsg: false,
+    };
+  }
 
   selectTextFromElement(domElement) {
     if (window.getSelection && document.createRange) {
@@ -18,9 +26,9 @@ class CopyToClipboard extends Component {
       selection.removeAllRanges();
       selection.addRange(range);
     } else if (document.selection && document.body.createTextRange) {
-        const range = document.body.createTextRange();
-        range.moveToElementText(domElement);
-        range.select();
+      const range = document.body.createTextRange();
+      range.moveToElementText(domElement);
+      range.select();
     }
   }
 
@@ -28,11 +36,22 @@ class CopyToClipboard extends Component {
     this.selectTextFromElement(domElement);
 
     try {
-        const successful = document.execCommand('copy');
-        return 'Copied';
+      document.execCommand('copy');
+      this.setState({resultMsg: 'Copied'}) ;
     } catch (err) {
-        return 'Oops, unable to copy';
+      this.setState({resultMsg: 'Oops, unable to copy'}) ;
     }
+
+
+    this.setState({
+      showResultMsg : true,
+    });
+
+    this.copyTimeout = window.setTimeout(() => {
+      window.clearTimeout(this.copyTimeout);
+      this.setState({ showResultMsg: false });
+    }, 3000);
+  
   }
 
   render() {
@@ -42,9 +61,16 @@ class CopyToClipboard extends Component {
               {this.props.string}
           </span>
           <Button level='secondary' clickHandler={this.copyToClipboard.bind(this, this.urlSpan)}>
-              Copy Link
-              <img src={chain} alt="chain icon" />
+              <span className={this.state.showResultMsg ? 'buttonTitle result' : 'buttonTitle'} >
+                {this.state.showResultMsg === true 
+                  ? this.state.resultMsg
+                  : <span className="flex">Copy Link<img src={chain} alt="chain icon" /></span>
+                }
+              </span>
+              
           </Button>
+
+ 
       </div>
     );
   }
