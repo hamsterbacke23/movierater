@@ -8,6 +8,7 @@ const customRating = (results) => {
             if (value < 7) customRating--;
             if (value >= 7.5) customRating++;
             if (value >= 8.0) customRating++;
+            if (value >= 8.5) customRating++;
         }
 
         if(res.Ratings && res.Ratings[1] && res.Ratings[1].Source === 'Rotten Tomatoes') {
