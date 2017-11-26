@@ -7,7 +7,7 @@ const tobiRating = (results) => {
             const value = parseFloat(res.imdbRating, 10);
             if (value < 7) tobiRating--;
             if (value >= 7.5) tobiRating++;
-            if (value >= 9) tobiRating++;
+            if (value >= 8.5) tobiRating++;
         }
 
         if(res.Ratings && res.Ratings[1] && res.Ratings[1].Source === 'Rotten Tomatoes') {
