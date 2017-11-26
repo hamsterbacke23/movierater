@@ -34,10 +34,24 @@ class App extends Component {
     });
   }
 
-  componentDidMount = () => this.searchInfos();
+  componentDidMount() {
+    if (!this.state.lines.length) {
+       const hashLines = window.location.hash.replace('#', '')
+          .split(',')
+          .map(item => decodeURIComponent(item));
+       this.setState({
+         lines: hashLines,
+         content: hashLines.reverse().join('\n'),
+      });
+    }
+  }
+
   componentDidUpdate(previousProps, previousState) {
     if(previousState.lines !== this.state.lines) {
       this.searchInfos();
+    }
+    if(this.state.infos && window.history.pushState) {
+        window.history.pushState(null, null, '#' + this.state.infos.map(item => encodeURIComponent(item.Title)).join());
     }
   }
 
