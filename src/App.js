@@ -31,7 +31,6 @@ class App extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const lines = this.state.content.split('\n')
-      // .map((item) => item.replace(/-/g, ''))
       .filter((item) => item.trim() !== '' );
     this.setState({
       lines: lines,

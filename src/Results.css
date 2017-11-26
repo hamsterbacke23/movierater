@@ -15,6 +15,7 @@
     width: 25%;
 }
 
+.results .noimage,
 .results img {
     width: 12vw;
     max-width: 100%;

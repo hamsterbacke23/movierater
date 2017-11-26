@@ -12,9 +12,12 @@ const thumbsUpNullRating = 180;
 
 const row = (result, index) =>
     <li key={`row_${index ? index : Math.random(1, 100000)}`}>
-        <img src={result.Poster} alt={`${result.Title} Poster`}/>
+        {result.Poster !== 'N/A' 
+        ? <img src={result.Poster} alt={`${result.Title} Poster`}/>
+        : <span className='noimage'>N/A</span>
+        }
 
-        <span>{result.Title}</span>
+        <span>{result.linkTitle}</span>
         <ul className="ratings">
             {result.Ratings && result.Ratings.map((rating, j) =>
                 <li key={`ratings_${j}_${index}`}>{rating.Source}: {rating.Value}</li>
@@ -37,7 +40,7 @@ const formatTitle = (results) => results.map((res) => {
         : res.Title;
     return {
         ...res,
-        Title: newTitle
+        linkTitle: newTitle
     }
 });
 
