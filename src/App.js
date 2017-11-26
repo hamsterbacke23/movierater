@@ -12,7 +12,7 @@ class App extends Component {
     
     this.state = {
       content: 'dances with wolves',
-      lines : [],
+      lines : ['dances with wolves'],
       infos: [],
     };
 
@@ -35,7 +35,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    if (!this.state.lines.length) {
+    if (window.location.hash) {
        const hashLines = window.location.hash.replace('#', '')
           .split(',')
           .map(item => decodeURIComponent(item));
