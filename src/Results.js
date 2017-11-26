@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Results.css';
-import thumbs_up from './thumbs_up.svg';
+import thumbs_up from './svg/thumbs_up.svg';
 import tobiRating from './tobiRating.js'
 
 

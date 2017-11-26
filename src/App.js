@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import Button from './Button.js';
 import Results from './Results.js';
+import CopyToClipboard from './CopyToClipboard.js';
+
 
 class App extends Component {
 
@@ -14,6 +16,7 @@ class App extends Component {
       content: 'dances with wolves',
       lines : ['dances with wolves'],
       infos: [],
+      href: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -29,8 +32,8 @@ class App extends Component {
       // .map((item) => item.replace(/-/g, ''))
       .filter((item) => item.trim() !== '' );
     this.setState({
-      'lines': lines,
-      'infos' : [], // reset
+      lines: lines,
+      infos : [], // reset
     });
   }
 
@@ -50,13 +53,10 @@ class App extends Component {
     if(previousState.lines !== this.state.lines) {
       this.searchInfos();
     }
-    if(this.state.infos && window.history.pushState) {
-        window.history.pushState(null, null, '#' + this.state.infos.map(item => encodeURIComponent(item.Title)).join());
-    }
   }
 
   searchInfos(){
-    this.state.lines.map((line) => fetch(`https://www.omdbapi.com/?t=${line}&apikey=${this.apiKey}`)
+    const linePromises = this.state.lines.map((line) => fetch(`https://www.omdbapi.com/?t=${line}&apikey=${this.apiKey}`)
       .then(response => {
         if(!response.ok) {
           const e = new Error('Something went wrong');
@@ -69,8 +69,20 @@ class App extends Component {
         }
         const oldValues = this.state.infos;
         const newValues = [...oldValues, json];
-        this.setState({infos : newValues});
+        this.setState({
+          infos : newValues,
+        });
       }));
+
+      // update href
+      Promise.all(linePromises).then(() => {
+        if (window.history.pushState) {
+          window.history.pushState(null, null, '#' + this.state.infos.map(item => encodeURIComponent(item.Title)).join());
+        }
+        this.setState({
+          href: window.location.href
+        });
+      });
 
   } 
 
@@ -82,9 +94,15 @@ class App extends Component {
         </header>
         <div className="App-input">
           <textarea onChange={this.handleChange} value={this.state.content}></textarea>
-          <Button handleSubmit={this.handleSubmit}>Submit</Button>
+          <Button clickHandler={this.handleSubmit}>Submit</Button>
         </div>
         <Results results={this.state.infos}/>
+        
+        {this.state.infos.length > 0 && 
+          <CopyToClipboard 
+            string={this.state.href}
+          />
+        }
       </div>
     );
   }

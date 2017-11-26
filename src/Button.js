@@ -5,14 +5,24 @@ import './Button.css';
 
 function Button(props) {
   return (
-    <button onClick={props.handleSubmit}>
-        {Children.toArray(props.children)}
-    </button>
+    <div>
+      { (props.type === 'primary' || !props.type)  && 
+        <button onClick={props.clickHandler}>
+            {Children.toArray(props.children)}
+        </button>
+      }
+      { props.type === 'secondary' && 
+        <button className='secondary' onClick={props.clickHandler}>
+            {Children.toArray(props.children)}
+        </button>
+      }
+    </div>
   );
 }
 
 Button.propTypes = {
-  handleSubmit: PropTypes.func,
+  clickHandler: PropTypes.func,
+  type: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 

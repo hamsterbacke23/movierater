@@ -4,11 +4,14 @@
 
 .App-header {
   padding: 20px;
-  color: white;
 }
 
 .App-input {
   margin-bottom: 60px;
+}
+
+.App-copyurl {
+  color: #D7D7D7;
 }
 
 textarea {

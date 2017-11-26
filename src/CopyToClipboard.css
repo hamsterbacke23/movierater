@@ -1,0 +1,12 @@
+.copyContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.copyToClipboard {
+    font-size: 11px;
+    opacity: 0.6;
+    align-self: center;
+    word-wrap:break-word;
+    max-width: 40%;
+}
