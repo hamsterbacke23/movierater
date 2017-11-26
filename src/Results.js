@@ -6,8 +6,8 @@ import customRating from './customRating.js'
 
 
 const imdbUri = 'https://www.imdb.com/title/';
-const thumbsUpSteps = 18;
-const thumbsUpStart = 90;
+const thumbsUpSteps = 22;
+const thumbsUpStart = 120;
 const thumbsUpNullRating = 180;
 
 const row = (result, index) =>
