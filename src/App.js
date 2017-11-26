@@ -8,6 +8,7 @@ import CopyToClipboard from './CopyToClipboard.js';
 class App extends Component {
 
   apiKey = 'e0fa53bd'; // please create your own at omdbapi.com
+  apiEndpoint = 'https://www.omdbapi.com/?t=';
 
   constructor(props) {
     super(props);
@@ -56,7 +57,7 @@ class App extends Component {
   }
 
   searchInfos(){
-    const linePromises = this.state.lines.map((line) => fetch(`https://www.omdbapi.com/?t=${line}&apikey=${this.apiKey}`)
+    const linePromises = this.state.lines.map((line) => fetch(this.apiEndpoint + `${line}&apikey=${this.apiKey}`)
       .then(response => {
         if(!response.ok) {
           const e = new Error('Something went wrong');

@@ -5,9 +5,12 @@ import thumbs_up from './svg/thumbs_up.svg';
 import tobiRating from './tobiRating.js'
 
 
+const imdbUri = 'https://www.imdb.com/title/';
+
 const row = (result, index) =>
     <li key={`row_${index ? index : Math.random(1, 100000)}`}>
         <img src={result.Poster} alt={`${result.Title} Poster`}/>
+
         <span>{result.Title}</span>
         <ul className="ratings">
             {result.Ratings && result.Ratings.map((rating, j) =>
@@ -18,10 +21,20 @@ const row = (result, index) =>
         
     </li>
 
+const formatTitle = (results) => results.map((res) => {
+    const newTitle = res.imdbID 
+        ? <a href={imdbUri + res.imdbID}>{res.Title}</a>
+        : res.Title;
+    return {
+        ...res,
+        Title: newTitle
+    }
+});
 
 
 function Results(props) {
-    const formattedResults = tobiRating(props.results);
+    const customratedResults = tobiRating(props.results);
+    const formattedResults = formatTitle(customratedResults);
     return (
         <ul className="results">
             {formattedResults.map((result, index) =>
