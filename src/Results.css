@@ -7,15 +7,16 @@
 .results > li {
     display: flex;
     justify-content: center;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .results > li > * {
-    margin: 0 5px;
+    margin: 0 6px;
+    width: 25%;
 }
 
 .results img {
-    width: 100px;
+    width: 12vw;
     max-width: 100%;
     height: 100%;
 }
@@ -26,6 +27,17 @@
     height: 75px;
 }
 
+.results .tobirating {
+    transform-origin: 50% 50%;
+    transform: rotate(180deg);
+    width: 8vw;
+    margin: 0 15px;
+}
+
+.results .tobirating-1 {transform: rotate(90deg)}    
+.results .tobirating-2 {transform: rotate(60deg)}    
+.results .tobirating-3 {transform: rotate(30deg)}    
+.results .tobirating-4 {transform: rotate(0)}    
 
 .ratings {
     text-align: left;
