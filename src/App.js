@@ -14,8 +14,8 @@ class App extends Component {
     super(props);
     
     this.state = {
-      content: 'dances with wolves',
-      lines : ['dances with wolves'],
+      content: 'dances with wolves \nthe godfather',
+      lines : ['dances with wolves', 'the godfather'],
       infos: [],
       href: '',
     };
