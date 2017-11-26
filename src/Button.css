@@ -9,6 +9,7 @@ button {
     color: #EAC67A;
     border: 0;
     background-color: transparent;
+    cursor: pointer;
 }
 
 button.secondary {

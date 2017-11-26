@@ -93,10 +93,10 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Movierater</h1>
         </header>
-        <div className="App-input">
+        <form className="App-input" onSubmit={this.handleSubmit}>
           <textarea onChange={this.handleChange} value={this.state.content}></textarea>
-          <Button clickHandler={this.handleSubmit}>Submit</Button>
-        </div>
+          <Button type="submit" clickHandler={this.handleSubmit}>Submit</Button>
+        </form>
         <Results results={this.state.infos}/>
         
         {this.state.infos.length > 0 && 

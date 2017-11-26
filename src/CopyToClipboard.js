@@ -41,7 +41,7 @@ class CopyToClipboard extends Component {
           <span className="copyToClipboard" ref={(span) => { this.urlSpan = span; }} >
               {this.props.string}
           </span>
-          <Button type='secondary' clickHandler={this.copyToClipboard.bind(this, this.urlSpan)}>
+          <Button level='secondary' clickHandler={this.copyToClipboard.bind(this, this.urlSpan)}>
               Copy Link
               <img src={chain} alt="chain icon" />
           </Button>
