@@ -8,6 +8,7 @@ import customRating from './customRating.js'
 const imdbUri = 'https://www.imdb.com/title/';
 const thumbsUpSteps = 18;
 const thumbsUpStart = 90;
+const thumbsUpNullRating = 180;
 
 const row = (result, index) =>
     <li key={`row_${index ? index : Math.random(1, 100000)}`}>
@@ -24,7 +25,7 @@ const row = (result, index) =>
             className={`customRating customRating-${result.customRating}`} 
             alt={`tobi rating: ${result.customRating}`}
             style={{
-                'transform': `rotate(${thumbsUpStart - thumbsUpSteps * result.customRating}deg)`
+                'transform': `rotate(${result.customRating > 0 ? thumbsUpStart - thumbsUpSteps * result.customRating : thumbsUpNullRating}deg)`
             }}
             />
         
