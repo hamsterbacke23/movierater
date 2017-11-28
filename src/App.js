@@ -22,7 +22,7 @@ class App extends Component {
       href: '',
     };
 
-    this.debouncedSubmit = _.debounce(this.handleSubmit, 1000)
+    this.debouncedSubmit = _.debounce(this.handleSubmit, 1000);
   }
 
   handleChange(event) {
