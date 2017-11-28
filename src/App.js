@@ -77,7 +77,7 @@ class App extends Component {
     });
 
     const linePromises = this.state.lines.map((line) => {
-      const movieTitle = line.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/, '');
+      const movieTitle = line.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/, ''); // remove comments
       const uri = this.apiEndpoint + `${movieTitle}&apikey=${this.apiKey}`;
 
       return fetch(uri)
