@@ -16,8 +16,8 @@ class App extends Component {
     super(props);
     
     this.state = {
-      content: 'dances with wolves \nthe godfather',
-      lines : ['dances with wolves', 'the godfather'],
+      content: 'dances with wolves\nwild strawberries //good movie! \nthe godfather',
+      lines : [],
       infos: [],
       href: '',
     };
@@ -35,7 +35,8 @@ class App extends Component {
       event.preventDefault();
     }
     const lines = this.state.content.split('\n')
-      .filter((item) => item.trim() !== '' );
+      .filter((item) => item.trim() !== '' ); // get rid of empty lines
+      
     this.setState({
       lines: lines,
       infos : [], // reset
@@ -65,28 +66,33 @@ class App extends Component {
       showSpinner: true,
     });
 
-    const linePromises = this.state.lines.map((line) => fetch(this.apiEndpoint + `${line}&apikey=${this.apiKey}`)
-      .then(response => {
-        if(!response.ok) {
-          const e = new Error('Something went wrong');
-          throw e;
-        }
-        return response.json();
-      }).then(json => {
-        if(json.Response === 'False') {
-          json.Title = line;
-        }
-        const oldValues = this.state.infos;
-        const newValues = [...oldValues, json];
-        this.setState({
-          infos : newValues,
-        });
-      }));
+    const linePromises = this.state.lines.map((line) => {
+      const movieTitle = line.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/, '');
+      const uri = this.apiEndpoint + `${movieTitle}&apikey=${this.apiKey}`;
+
+      return fetch(uri)
+        .then(response => {
+          if(!response.ok) {
+            const e = new Error('Something went wrong');
+            throw e;
+          }
+          return response.json();
+        }).then(json => {
+          if(json.Response === 'False') {
+            json.Title = line;
+          }
+          const oldValues = this.state.infos;
+          const newValues = [...oldValues, json];
+          this.setState({
+            infos : newValues,
+          });
+        })
+      });
 
       // update href
       Promise.all(linePromises).then(() => {
         if (window.history.pushState) {
-          window.history.pushState(null, null, '#' + this.state.infos.map(item => encodeURIComponent(item.Title)).join());
+          window.history.pushState(null, null, '#' + this.state.lines.map(line => encodeURIComponent(line)).join());
         }
         this.setState({
           href: window.location.href,
