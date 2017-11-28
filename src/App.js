@@ -102,7 +102,7 @@ class App extends Component {
       // update href
       Promise.all(linePromises).then(() => {
         if (window.history.pushState) {
-          window.history.replaceState({state: this.state.content}, null, '#' + this.state.lines.map(line => encodeURIComponent(line)).join());
+          window.history.pushState({state: this.state.content}, null, '#' + this.state.lines.map(line => encodeURIComponent(line)).join());
         }
         this.setState({
           href: window.location.href,
