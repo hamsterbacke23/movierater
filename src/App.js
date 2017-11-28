@@ -4,6 +4,7 @@ import Button from './Button.js';
 import Results from './Results.js';
 import CopyToClipboard from './CopyToClipboard.js';
 import octocat from './svg/octocat.svg';
+import _ from 'lodash';
 
 class App extends Component {
 
@@ -20,16 +21,18 @@ class App extends Component {
       href: '',
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.debouncedSubmit = _.debounce(this.handleSubmit, 1000)
   }
 
   handleChange(event) {
     this.setState({content: event.target.value});
+    this.debouncedSubmit();
   }
 
   handleSubmit(event) {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     const lines = this.state.content.split('\n')
       .filter((item) => item.trim() !== '' );
     this.setState({
@@ -57,6 +60,10 @@ class App extends Component {
   }
 
   searchInfos(){
+    this.setState({
+      showSpinner: true,
+    });
+
     const linePromises = this.state.lines.map((line) => fetch(this.apiEndpoint + `${line}&apikey=${this.apiKey}`)
       .then(response => {
         if(!response.ok) {
@@ -94,7 +101,7 @@ class App extends Component {
           <h1 className="App-title">Movierater</h1>
         </header>
         <form className="App-input" onSubmit={this.handleSubmit}>
-          <textarea onChange={this.handleChange} value={this.state.content}></textarea>
+          <textarea onChange={this.handleChange.bind(this)} value={this.state.content}></textarea>
           <Button type="submit" clickHandler={this.handleSubmit}>Submit</Button>
         </form>
         <Results results={this.state.infos}/>
