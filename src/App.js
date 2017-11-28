@@ -45,20 +45,30 @@ class App extends Component {
 
   componentDidMount() {
     if (window.location.hash) {
-       const hashLines = window.location.hash.replace('#', '')
-          .split(',')
-          .map(item => decodeURIComponent(item));
-       this.setState({
-         lines: hashLines,
-         content: hashLines.reverse().join('\n'),
-      });
+      this.getInfoFromHash();
     }
+    window.addEventListener('hashchange', this.getInfoFromHash.bind(this), false);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('hashchange', this.getInfoFromHash.bind(this), false);
+  }
+
 
   componentDidUpdate(previousProps, previousState) {
     if(previousState.lines !== this.state.lines) {
       this.searchInfos();
     }
+  }
+
+  getInfoFromHash() {
+    const hashLines = window.location.hash.replace('#', '')
+      .split(',')
+      .map(item => decodeURIComponent(item));
+    this.setState({
+      lines: hashLines,
+      content: hashLines.join('\n'),
+    });
   }
 
   searchInfos(){
@@ -92,7 +102,7 @@ class App extends Component {
       // update href
       Promise.all(linePromises).then(() => {
         if (window.history.pushState) {
-          window.history.pushState(null, null, '#' + this.state.lines.map(line => encodeURIComponent(line)).join());
+          window.history.replaceState({state: this.state.content}, null, '#' + this.state.lines.map(line => encodeURIComponent(line)).join());
         }
         this.setState({
           href: window.location.href,
