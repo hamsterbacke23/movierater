@@ -18,6 +18,11 @@ a {
   color: #fff;
 }
 
+/* we will never need submit buttons for our forms in this app again! */
+form button[type="submit"] {
+  display: none;
+}
+
 .view-on-github {
   position: fixed;
   right: 10px;
@@ -48,3 +53,4 @@ textarea {
   font-size: 14px;
   margin-bottom: 15px;
 }
+

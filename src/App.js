@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import './Spinner.css';
 import Button from './Button.js';
 import Results from './Results.js';
 import CopyToClipboard from './CopyToClipboard.js';
@@ -88,7 +89,8 @@ class App extends Component {
           window.history.pushState(null, null, '#' + this.state.infos.map(item => encodeURIComponent(item.Title)).join());
         }
         this.setState({
-          href: window.location.href
+          href: window.location.href,
+          showSpinner: false,
         });
       });
 
@@ -104,6 +106,9 @@ class App extends Component {
           <textarea onChange={this.handleChange.bind(this)} value={this.state.content}></textarea>
           <Button type="submit" clickHandler={this.handleSubmit}>Submit</Button>
         </form>
+        
+        <div className={this.state.showSpinner ? 'spinner active' : 'spinner'}></div>
+        
         <Results results={this.state.infos}/>
         
         {this.state.infos.length > 0 && 
