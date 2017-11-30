@@ -4,16 +4,10 @@ button {
     margin: 0 auto;
     padding: 5px 15px;
     font-family: sans-serif;
-    font-size: 20px;
-    font-weight: 700;
+    font-weight: 400;
+    line-height: 22px;
     color: #EAC67A;
     border: 0;
     background-color: transparent;
     cursor: pointer;
-}
-
-button.secondary {
-    line-height: 22px;
-    font-size: 14px;
-    font-weight: 400;
 }

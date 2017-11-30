@@ -5,6 +5,7 @@ import thumbsUp from './svg/thumbsUp.svg';
 import customRating from './customRating.js'
 
 
+const netflixSearchUri = 'https://www.netflix.com/search?q=';
 const imdbUri = 'https://www.imdb.com/title/';
 const thumbsUpSteps = 22;
 const thumbsUpStart = 120;
@@ -17,10 +18,20 @@ const row = (result, index) =>
         : <span className='noimage'>N/A</span>
         }
 
-        <span>{result.linkTitle}</span>
+        <div>
+            <span className="title">{result.Title}</span>
+            <div className="links">
+              {result.imdbLink}
+              <a href={netflixSearchUri + encodeURIComponent(result.Title)}>Search on Netflix</a>
+            </div>
+        </div>
+
         <ul className="ratings">
             {result.Ratings && result.Ratings.map((rating, j) =>
-                <li key={`ratings_${j}_${index}`}>{rating.Source}: {rating.Value}</li>
+                <li key={`ratings_${j}_${index}`}>
+                    <span className="vendor">{rating.Source}</span> 
+                    <span className="value">{rating.Value}</span>
+                </li>
             )}
         </ul>
         <img
@@ -36,11 +47,11 @@ const row = (result, index) =>
 
 const formatTitle = (results) => results.map((res) => {
     const newTitle = res.imdbID 
-        ? <a href={imdbUri + res.imdbID}>{res.Title}</a>
-        : res.Title;
+        ? <a href={imdbUri + res.imdbID}>imdb</a>
+        : '';
     return {
         ...res,
-        linkTitle: newTitle
+        imdbLink: newTitle
     }
 });
 
