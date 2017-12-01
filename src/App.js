@@ -5,7 +5,7 @@ import Button from './Button.js';
 import Results from './Results.js';
 import CopyToClipboard from './CopyToClipboard.js';
 import octocat from './svg/octocat.svg';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 
 class App extends Component {
 
@@ -22,7 +22,7 @@ class App extends Component {
       href: '',
     };
 
-    this.debouncedSubmit = _.debounce(this.handleSubmit, 1000);
+    this.debouncedSubmit = debounce(this.handleSubmit, 1000);
   }
 
   handleChange(event) {
