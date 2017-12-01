@@ -5,7 +5,9 @@ import Button from './Button.js';
 import Results from './Results.js';
 import CopyToClipboard from './CopyToClipboard.js';
 import octocat from './svg/octocat.svg';
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
+import differenceWith from 'lodash/differenceWith';
+import isEqual from 'lodash/isEqual';
 
 class App extends Component {
 
@@ -22,7 +24,7 @@ class App extends Component {
       href: '',
     };
 
-    this.debouncedSubmit = _.debounce(this.handleSubmit, 1000);
+    this.debouncedSubmit = debounce(this.handleSubmit, 1000);
   }
 
   handleChange(event) {
@@ -34,12 +36,16 @@ class App extends Component {
     if (event) {
       event.preventDefault();
     }
+    
     const lines = this.state.content.split('\n')
       .filter((item) => item.trim() !== '' ); // get rid of empty lines
-      
+    
+    // remove the result info from the list corresponding to a removed line
+    const removedLines = differenceWith(this.state.lines, lines, isEqual);
+    this.removeInfo(removedLines);
+
     this.setState({
       lines: lines,
-      infos : [], // reset
     });
   }
 
@@ -54,10 +60,26 @@ class App extends Component {
     window.removeEventListener('hashchange', this.getInfoFromHash.bind(this), false);
   }
 
+  removeInfo(removeLines) {
+    removeLines.map((rLine) => { 
+      const rIndex = this.state.lines.indexOf(rLine);
+
+      if (rIndex > -1) {
+        const newInfos = this.state.infos.filter((item, index) => index !== rIndex);
+        this.setState({
+          infos: newInfos
+        });
+      }
+      return rIndex; 
+    });
+  }
 
   componentDidUpdate(previousProps, previousState) {
     if(previousState.lines !== this.state.lines) {
-      this.searchInfos();
+      const addedDiff = differenceWith(this.state.lines, previousState.lines, isEqual);
+      if (addedDiff) {
+        this.searchInfos(addedDiff);
+      }
     }
   }
 
@@ -71,12 +93,12 @@ class App extends Component {
     });
   }
 
-  searchInfos(){
+  searchInfos(diff){
     this.setState({
       showSpinner: true,
     });
 
-    const linePromises = this.state.lines.map((line) => {
+    const linePromises = diff.map((line) => {
       const movieTitle = line.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/, ''); // remove comments
       const uri = this.apiEndpoint + `${movieTitle}&apikey=${this.apiKey}`;
 
@@ -91,10 +113,9 @@ class App extends Component {
           if(json.Response === 'False') {
             json.Title = line;
           }
-          const oldValues = this.state.infos;
-          const newValues = [...oldValues, json];
+          const newInfos = [...this.state.infos, json];
           this.setState({
-            infos : newValues,
+            infos : newInfos,
           });
         })
       });
