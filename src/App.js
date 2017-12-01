@@ -113,6 +113,10 @@ class App extends Component {
   } 
 
   render() {
+    document.title = this.state.infos.length 
+      ? 'Movierater - ' + this.state.infos.map(item => item.Title).join(', ') 
+      : 'Movierater';
+    
     return (
       <div className="App">
         <header className="App-header">
