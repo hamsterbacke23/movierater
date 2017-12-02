@@ -6,8 +6,7 @@ import Results from './Results.js';
 import CopyToClipboard from './CopyToClipboard.js';
 import octocat from './svg/octocat.svg';
 import debounce from 'lodash/debounce';
-import differenceWith from 'lodash/differenceWith';
-import isEqual from 'lodash/isEqual';
+import arrayDiff from 'arraydiff';
 
 class App extends Component {
 
@@ -40,14 +39,23 @@ class App extends Component {
     const lines = this.state.content.split('\n')
       .filter((item) => item.trim() !== '' ); // get rid of empty lines
     
-    // remove the result info from the list corresponding to a removed line
-    const removedLines = differenceWith(this.state.lines, lines, isEqual);
-    this.removeInfo(removedLines);
+    // get all remove diffs and search them
+    arrayDiff(this.state.lines, lines)
+      .filter(diff => diff.type === 'remove')
+      .map(removeDiff => this.removeInfo(removeDiff));
 
     this.setState({
       lines: lines,
     });
   }
+
+  removeInfo(removeDiff) {
+    const newInfos = this.state.infos.filter((info, index) => index !== removeDiff.index);
+    this.setState({
+      infos: newInfos
+    });
+  }
+
 
   componentDidMount() {
     if (window.location.hash) {
@@ -60,26 +68,13 @@ class App extends Component {
     window.removeEventListener('hashchange', this.getInfoFromHash.bind(this), false);
   }
 
-  removeInfo(removeLines) {
-    removeLines.map((rLine) => { 
-      const rIndex = this.state.lines.indexOf(rLine);
-
-      if (rIndex > -1) {
-        const newInfos = this.state.infos.filter((item, index) => index !== rIndex);
-        this.setState({
-          infos: newInfos
-        });
-      }
-      return rIndex; 
-    });
-  }
-
   componentDidUpdate(previousProps, previousState) {
     if(previousState.lines !== this.state.lines) {
-      const addedDiff = differenceWith(this.state.lines, previousState.lines, isEqual);
-      if (addedDiff) {
-        this.searchInfos(addedDiff);
-      }
+      
+      // get all insert diffs and search them
+      arrayDiff(previousState.lines, this.state.lines)
+        .filter(diff => diff.type === 'insert')
+        .map(insertDiff => this.searchInfos(insertDiff));
     }
   }
 
@@ -93,12 +88,11 @@ class App extends Component {
     });
   }
 
-  searchInfos(diff){
+  searchInfos(insertDiff){
     this.setState({
       showSpinner: true,
     });
-
-    const linePromises = diff.map((line) => {
+    const linePromises = insertDiff.values.map((line) => {
       const movieTitle = line.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/, ''); // remove comments
       const uri = this.apiEndpoint + `${movieTitle}&apikey=${this.apiKey}`;
 
@@ -113,22 +107,24 @@ class App extends Component {
           if(json.Response === 'False') {
             json.Title = line;
           }
-          const newInfos = [...this.state.infos, json];
-          this.setState({
-            infos : newInfos,
-          });
+          return json;
         })
       });
 
       // update href
-      Promise.all(linePromises).then(() => {
-        if (window.history.pushState) {
-          window.history.pushState({state: this.state.content}, null, '#' + this.state.lines.map(line => encodeURIComponent(line)).join());
-        }
+      Promise.all(linePromises).then((values) => {
+        const newInfos = this.state.infos;
+        newInfos.splice(insertDiff.index, 0, ...values); // js is awesome
+        
         this.setState({
+          infos : newInfos,
           href: window.location.href,
           showSpinner: false,
         });
+
+        if (window.history.pushState) {
+          window.history.pushState({state: this.state.content}, null, '#' + this.state.lines.map(line => encodeURIComponent(line)).join());
+        }
       });
 
   } 
@@ -137,7 +133,7 @@ class App extends Component {
     document.title = this.state.infos.length 
       ? 'Movierater - ' + this.state.infos.map(item => item.Title).join(', ') 
       : 'Movierater';
-    
+  
     return (
       <div className="App">
         <header className="App-header">

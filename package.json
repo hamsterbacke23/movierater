@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://hamsterbacke23.github.io/movierater",
   "dependencies": {
+    "arraydiff": "^0.1.3",
     "gh-pages": "^1.1.0",
     "lodash": "^4.17.4",
     "react": "^16.0.0",
