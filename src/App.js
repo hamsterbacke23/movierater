@@ -68,15 +68,13 @@ class App extends Component {
   componentDidUpdate(previousProps, previousState) {
     if(previousState.lines !== this.state.lines) {
       
-      // create diffs and add or remove infos
-      
-      arrayDiff(previousState.lines, this.state.lines)
-        .filter(diff => diff.type === 'insert')
-        .map(insertDiff => this.searchInfos(insertDiff));
+      const diff = arrayDiff(previousState.lines, this.state.lines);
 
-      arrayDiff(previousState.lines, this.state.lines)
-      .filter(diff => diff.type === 'remove')
-      .map(removeDiff => this.removeInfo(removeDiff));
+      diff.filter(diff => diff.type === 'insert')
+        .map(insertDiff => this.searchInfos(insertDiff));
+    
+      diff.filter(diff => diff.type === 'remove')
+        .map(removeDiff => this.removeInfo(removeDiff));
     }
   }
 
