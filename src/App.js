@@ -38,15 +38,11 @@ class App extends Component {
     
     const lines = this.state.content.split('\n')
       .filter((item) => item.trim() !== '' ); // get rid of empty lines
-    
-    // get all remove diffs and search them
-    arrayDiff(this.state.lines, lines)
-      .filter(diff => diff.type === 'remove')
-      .map(removeDiff => this.removeInfo(removeDiff));
-
+ 
     this.setState({
       lines: lines,
     }, this.updateHref);
+
   }
 
   removeInfo(removeDiff) {
@@ -72,10 +68,15 @@ class App extends Component {
   componentDidUpdate(previousProps, previousState) {
     if(previousState.lines !== this.state.lines) {
       
-      // get all insert diffs and search them
+      // create diffs and add or remove infos
+      
       arrayDiff(previousState.lines, this.state.lines)
         .filter(diff => diff.type === 'insert')
         .map(insertDiff => this.searchInfos(insertDiff));
+
+      arrayDiff(previousState.lines, this.state.lines)
+      .filter(diff => diff.type === 'remove')
+      .map(removeDiff => this.removeInfo(removeDiff));
     }
   }
 
@@ -112,7 +113,6 @@ class App extends Component {
         })
       });
 
-      // update href
       Promise.all(linePromises).then((values) => {
         const newInfos = this.state.infos;
         newInfos.splice(insertDiff.index, 0, ...values); // js is awesome
@@ -121,7 +121,6 @@ class App extends Component {
           infos : newInfos,
           showSpinner: false,
         });
-
         this.updateHref();
       });
 
