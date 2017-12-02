@@ -10,7 +10,7 @@
 .spinner {
     opacity: 1;
     position: absolute;
-    top: 300px;
+    top: 55vmin;
     left: calc(50% - 15px);
     border-radius: 50%;
     height: 20px;

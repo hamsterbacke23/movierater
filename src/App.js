@@ -17,7 +17,7 @@ class App extends Component {
     super(props);
     
     this.state = {
-      content: 'dances with wolves\nwild strawberries //good movie! \nthe godfather',
+      content: 'Taxi Driver\nWild strawberries // ingmar bergman\nRan\nPsycho\nAliens',
       lines : [],
       infos: [],
       href: '',
