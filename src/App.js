@@ -50,12 +50,13 @@ class App extends Component {
   }
 
   removeInfo(removeDiff) {
-    const newInfos = this.state.infos.filter((info, index) => index !== removeDiff.index);
+    const newInfos = this.state.infos.filter((info, index) => {
+      return index < (removeDiff.index) || index >= (removeDiff.index + removeDiff.howMany);
+    });
     this.setState({
       infos: newInfos
     });
   }
-
 
   componentDidMount() {
     if (window.location.hash) {
