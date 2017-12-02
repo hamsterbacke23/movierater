@@ -46,7 +46,7 @@ class App extends Component {
 
     this.setState({
       lines: lines,
-    });
+    }, this.updateHref);
   }
 
   removeInfo(removeDiff) {
@@ -118,16 +118,23 @@ class App extends Component {
         
         this.setState({
           infos : newInfos,
-          href: window.location.href,
           showSpinner: false,
         });
 
-        if (window.history.pushState) {
-          window.history.pushState({state: this.state.content}, null, '#' + this.state.lines.map(line => encodeURIComponent(line)).join());
-        }
+        this.updateHref();
       });
 
   } 
+
+  updateHref() {
+    if (window.history.pushState) {
+      window.history.pushState(
+        {state: this.state.content}, null, '#' + this.state.lines.map(line => encodeURIComponent(line)).join());
+    }
+    this.setState({
+      href: window.location.href,
+    })
+  }
 
   render() {
     document.title = this.state.infos.length 
