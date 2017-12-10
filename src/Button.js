@@ -7,12 +7,12 @@ function Button(props) {
   return (
     <div>
       { (props.level === 'primary' || !props.level)  && 
-        <button type={props.type} onClick={props.clickHandler}>
+        <button type={props.type} onClick={props.onClick}>
             {Children.toArray(props.children)}
         </button>
       }
       { props.level === 'secondary' && 
-        <button type={props.type} className='secondary' onClick={props.clickHandler}>
+        <button type={props.type} className='secondary' onClick={props.onClick}>
             {Children.toArray(props.children)}
         </button>
       }
@@ -21,7 +21,7 @@ function Button(props) {
 }
 
 Button.propTypes = {
-  clickHandler: PropTypes.func,
+  onClick: PropTypes.func,
   level: PropTypes.string,
   type: PropTypes.string,
   children: PropTypes.node.isRequired,

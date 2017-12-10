@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import './CopyToClipboard.css';
+import chain from './svg/chain.svg';
 
 import Button from './Button.js';
-import chain from './svg/chain.svg';
 
 
 class CopyToClipboard extends Component {
@@ -60,15 +60,7 @@ class CopyToClipboard extends Component {
           <span className="copyToClipboard" ref={(span) => { this.urlSpan = span; }} >
               {this.props.string}
           </span>
-          <Button level='secondary' clickHandler={this.copyToClipboard.bind(this, this.urlSpan)}>
-              <span className={this.state.showResultMsg ? 'buttonTitle result' : 'buttonTitle'} >
-                {this.state.showResultMsg === true 
-                  ? this.state.resultMsg
-                  : <span className="flex">Copy Link<img src={chain} alt="chain icon" /></span>
-                }
-              </span>
-              
-          </Button>
+
 
  
       </div>

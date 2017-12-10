@@ -3,8 +3,11 @@ import './App.css';
 import './Spinner.css';
 import Button from './Button.js';
 import Results from './Results.js';
-import CopyToClipboard from './CopyToClipboard.js';
+import './CopyToClipboard.css';
+import chain from './svg/chain.svg';
 import octocat from './svg/octocat.svg';
+
+import Copy from 'react-copy';
 import debounce from 'lodash/debounce';
 import arrayDiff from 'arraydiff';
 
@@ -134,6 +137,15 @@ class App extends Component {
     })
   }
 
+  onCopy(result) {
+    this.setState({ showResultMsg: true });
+    
+    this.copyTimeout = window.setTimeout(() => {
+      window.clearTimeout(this.copyTimeout);
+      this.setState({ showResultMsg: false });
+    }, 3000);
+  }
+
   render() {
     document.title = this.state.infos.length 
       ? 'Movierater - ' + this.state.infos.map(item => item.Title).join(', ') 
@@ -146,7 +158,7 @@ class App extends Component {
         </header>
         <form className="App-input" onSubmit={this.handleSubmit}>
           <textarea onChange={this.handleChange.bind(this)} value={this.state.content}></textarea>
-          <Button type="submit" clickHandler={this.handleSubmit}>Submit</Button>
+          <Button type="submit" onClick={this.handleSubmit}>Submit</Button>
         </form>
         
         <div className={this.state.showSpinner ? 'spinner active' : 'spinner'}></div>
@@ -154,9 +166,17 @@ class App extends Component {
         <Results results={this.state.infos}/>
         
         {this.state.infos.length > 0 && 
-          <CopyToClipboard 
-            string={this.state.href}
-          />
+          <Copy 
+            textToBeCopied={this.state.href}
+            onCopy={this.onCopy.bind(this)}
+          >
+            <Button level='secondary'>
+              {this.state.showResultMsg === true 
+                ? 'copied'
+                : <span className="flex">Copy Link<img src={chain} alt="chain icon" /></span>
+              }
+            </Button>
+          </Copy>
         }
 
         <a className="view-on-github" href="https://github.com/hamsterbacke23/movierater">
