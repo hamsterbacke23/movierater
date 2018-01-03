@@ -8,7 +8,7 @@ import chain from './svg/chain.svg';
 import octocat from './svg/octocat.svg';
 
 import Copy from 'react-copy';
-import debounce from 'lodash/debounce';
+import debounce from 'lodash.debounce';
 import arrayDiff from 'arraydiff';
 
 class App extends Component {
