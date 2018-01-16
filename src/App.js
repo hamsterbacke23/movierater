@@ -125,7 +125,9 @@ class App extends Component {
           showSpinner: false,
         });
         this.updateHref();
-      });
+      }).catch(function(err) {
+        console.log(err.message);
+      });;
 
   } 
 
