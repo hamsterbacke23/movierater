@@ -95,7 +95,7 @@ class App extends Component {
     this.setState({
       showSpinner: true,
     });
-    const linePromises = insertDiff.values.map((line) => {
+    const linePromises = insertDiff.values.map((line, j) => {
       const movieTitle = line.replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/, ''); // remove comments
       const uri = this.apiEndpoint + `${movieTitle}&apikey=${this.apiKey}`;
 
@@ -110,16 +110,18 @@ class App extends Component {
           if(json.Response === 'False') {
             json.Title = line;
           }
+          const newInfos = this.state.infos;
+          // insert new items right away at correct position from insertDiff.index
+          newInfos.splice(insertDiff.index + j, 0, json);
+          this.setState({
+            infos: newInfos,
+          });
           return json;
         })
       });
 
-      Promise.all(linePromises).then((values) => {
-        const newInfos = this.state.infos;
-        newInfos.splice(insertDiff.index, 0, ...values); // js is awesome
-        
+      Promise.all(linePromises).then(() => {
         this.setState({
-          infos : newInfos,
           showSpinner: false,
         });
         this.updateHref();
