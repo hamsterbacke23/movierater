@@ -126,6 +126,9 @@ class App extends Component {
         });
         this.updateHref();
       }).catch(function(err) {
+        this.setState({
+          showSpinner: false,
+        });
         console.log(err.message);
       });;
 
