@@ -114,7 +114,9 @@ class App extends Component {
     const linePromises = insertDiff.values.map((line, j) => {
       const commentRegex = /\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/;
       const commentMatches = line.match(commentRegex);
-      const comment = commentMatches ? commentMatches[0].replace('//', '') : '';
+      const comment = commentMatches
+        ? commentMatches[0].replace('//', '').trim()
+        : '';
 
       const movieTitle = line.replace(commentRegex, ''); // remove comments
       const uri = this.apiEndpoint + `${movieTitle}&apikey=${this.apiKey}`;

@@ -38,10 +38,14 @@
 }
 
 .results .noimage {
-  height: 25vh;
   background-color: #333;
-  padding: 20px;
+  padding: 20px 0;
   box-sizing: border-box;
+}
+.results .noimage::after {
+  content: '';
+  display: block;
+  padding-top: 50%;
 }
 
 .results .notfound {
@@ -62,6 +66,8 @@
 .results .title {
   display: block;
   margin-bottom: 2vmin;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .results .links {
@@ -73,13 +79,20 @@
   margin-bottom: 1vh;
 }
 
-.ratings .comment .value {
+.ratings .comment blockquote {
   font-style: italic;
   font-weight: 200;
   font-size: 3vmin;
   margin-left: 0;
+  margin: 0;
   padding-bottom: 8px;
   display: inline-block;
+}
+
+.ratings .comment .quote {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 3vmin;
 }
 
 @media screen and (min-width: 640px) {

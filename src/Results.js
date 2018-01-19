@@ -33,7 +33,11 @@ const row = (result, index) => (
         <ul className="ratings">
           {result.Comment && (
             <li className="comment">
-              <span className="value">{result.Comment}</span>
+              <blockquote className="value">
+                <span className="quote">“</span>
+                {result.Comment}
+                <span className="quote">”</span>
+              </blockquote>
             </li>
           )}
           {result.Ratings &&
