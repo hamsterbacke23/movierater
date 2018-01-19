@@ -12,6 +12,7 @@
 
 .results > li .infowrapper {
   margin-bottom: 15px;
+  width: 60vw;
 }
 
 .results > li .info {
@@ -19,9 +20,14 @@
   justify-content: center;
 }
 
-.results .info ul,
-.results .info div {
+.results .info > ul,
+.results .info > div {
   margin: 0 2vw;
+  width: 25%;
+}
+
+.results .info > ul {
+  width: 40%;
 }
 
 .results .noimage,
@@ -31,10 +37,19 @@
   height: 100%;
 }
 
+.results .noimage {
+  height: 25vh;
+  background-color: #333;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 .results .notfound {
   font-style: italic;
   color: #999;
   height: 75px;
+  align-items: center;
+  height: 20vh;
 }
 
 .results .info .customRating {
@@ -46,7 +61,7 @@
 
 .results .title {
   display: block;
-  margin-bottom: 1vh;
+  margin-bottom: 2vmin;
 }
 
 .results .links {
