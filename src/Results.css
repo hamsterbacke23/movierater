@@ -10,6 +10,10 @@
   margin: 15px 0;
 }
 
+.results > li > a {
+  height: 100%;
+}
+
 .results > li .infowrapper {
   margin-bottom: 15px;
   width: 60vw;
@@ -53,7 +57,7 @@
   color: #999;
   height: 75px;
   align-items: center;
-  height: 20vh;
+  height: 15vmin;
 }
 
 .results .info .customRating {
