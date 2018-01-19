@@ -13,7 +13,7 @@ const thumbsUpNullRating = 180;
 const row = (result, index) => (
   <li key={`row_${index ? index : Math.random(1, 100000)}`}>
     {result.Poster !== 'N/A' ? (
-      <img src={result.Poster} alt={`${result.Title} Poster`} />
+      result.linkedImg
     ) : (
       <span className="noimage">N/A</span>
     )}
@@ -69,9 +69,17 @@ const row = (result, index) => (
 const formatTitle = results =>
   results.map(res => {
     const newTitle = res.imdbID ? <a href={imdbUri + res.imdbID}>imdb</a> : '';
+    const linkedImg = res.imdbID ? (
+      <a href={imdbUri + res.imdbID}>
+        <img src={res.Poster} alt={`${res.Title} Poster`} />
+      </a>
+    ) : (
+      ''
+    );
     return {
       ...res,
-      imdbLink: newTitle
+      imdbLink: newTitle,
+      linkedImg: linkedImg
     };
   });
 
