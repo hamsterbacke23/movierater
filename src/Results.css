@@ -1,69 +1,92 @@
 .results {
-    display: block;
-    list-style-type: none;
-    margin-bottom: 50px;
+  display: block;
+  list-style-type: none;
+  margin-bottom: 50px;
 }
 
 .results > li {
-    display: flex;
-    justify-content: center;
-    margin: 15px 0;
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
 }
 
-.results > li > * {
-    margin: 0 2vw;
-    width: 25%;
+.results > li .infowrapper {
+  margin-bottom: 15px;
+}
+
+.results > li .info {
+  display: flex;
+  justify-content: center;
+}
+
+.results .info ul,
+.results .info div {
+  margin: 0 2vw;
 }
 
 .results .noimage,
 .results img {
-    width: 12vw;
-    max-width: 100%;
-    height: 100%;
+  width: 12vw;
+  max-width: 100%;
+  height: 100%;
 }
 
 .results .notfound {
-    font-style: italic;
-    color: #999;
-    height: 75px;
+  font-style: italic;
+  color: #999;
+  height: 75px;
 }
 
-.results .customRating {
-    transform-origin: 50% 50%;
-    transform: rotate(180deg);
-    width: 5vw;
-    margin: 0 15px;
+.results .info .customRating {
+  transform-origin: 50% 50%;
+  transform: rotate(180deg);
+  width: 5vw;
+  margin: 0 15px;
 }
 
 .results .title {
-    display: block;
-    margin-bottom: 1vh;
+  display: block;
+  margin-bottom: 1vh;
 }
 
 .results .links {
-    font-size: 0.9em;
+  font-size: 0.9em;
 }
 
 .results .links a {
-    display: block;
-    margin-bottom: 1vh;
+  display: block;
+  margin-bottom: 1vh;
+}
+
+.ratings .comment .value {
+  font-style: italic;
+  font-weight: 200;
+  font-size: 3vmin;
+  margin-left: 0;
+  padding-bottom: 8px;
+  display: inline-block;
+}
+
+@media screen and (min-width: 640px) {
+  .ratings .comment .value {
+    font-size: 2.5vmin;
+  }
 }
 
 .ratings {
-    text-align: left;
-    list-style-type: none;
-    font-size: 0.9em;
-   
+  text-align: left;
+  list-style-type: none;
+  font-size: 0.9em;
 }
 
 .ratings li {
-    margin-bottom: 1vh;
+  margin-bottom: 1vh;
 }
 
 .ratings .vendor {
-    opacity: 0.7;
+  opacity: 0.7;
 }
 .ratings .value {
-    margin-left: 1vw;
-    color: #fff;
+  margin-left: 1vw;
+  color: #fff;
 }

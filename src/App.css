@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  
 }
 
 .App-header {
@@ -12,23 +11,19 @@
 }
 
 .App-copyurl {
-  color: #D7D7D7;
-}
-
-a {
-  color: #fff;
+  color: #d7d7d7;
 }
 
 /* we will never need submit buttons for our forms in this app again! */
-form button[type="submit"] {
+form button[type='submit'] {
   display: none;
 }
 
 .view-on-github {
   position: fixed;
-  right: 10px;
-  top: 10px;
-  opacity: 0.3;
+  right: 20px;
+  top: 20px;
+  opacity: 0.6;
   display: flex;
   justify-content: center;
   font-size: 10px;
@@ -53,8 +48,3 @@ textarea {
   min-width: 50vw;
   margin-bottom: 15px;
 }
-
-a {
-  color: #EAC67A;
-}
-
