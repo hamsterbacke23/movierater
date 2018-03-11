@@ -7,7 +7,7 @@ import customRating from './customRating.js';
 const netflixSearchUri = 'https://www.netflix.com/search?q=';
 const imdbUri = 'https://www.imdb.com/title/';
 const thumbsUpSteps = 22;
-const thumbsUpStart = 120;
+const thumbsUpStart = 270;
 const thumbsUpNullRating = 180;
 
 const row = (result, index) => (
@@ -56,7 +56,7 @@ const row = (result, index) => (
           style={{
             transform: `rotate(${
               result.customRating > 0
-                ? thumbsUpStart - thumbsUpSteps * result.customRating
+                ? thumbsUpStart + thumbsUpSteps * result.customRating
                 : thumbsUpNullRating
             }deg)`
           }}
